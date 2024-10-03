@@ -14,6 +14,11 @@ void setup()
   LCD.fillScreen(ST77XX_BLACK);
   LCD.enableDisplay(true);
 
+  CAN.setFilterMask_Standard(0x1FFC0000);
+  for (size_t mailbox = 0; mailbox < R7FA4M1_CAN::CAN_MAX_NO_STANDARD_MAILBOXES; mailbox++)
+  {
+    CAN.setFilterId_Standard(mailbox, 0x758);
+  }
   if (!CAN.begin(CanBitRate::BR_500k))
   {
     LCD.print("Error initializing CAN");
