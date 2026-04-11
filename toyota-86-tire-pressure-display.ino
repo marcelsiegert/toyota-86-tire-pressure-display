@@ -1,9 +1,9 @@
 #include <Adafruit_ST7789.h>
 #include <Arduino_CAN.h>
 
-static int8_t constexpr PIN_LCD_CS = 10;
-static int8_t constexpr PIN_LCD_DC = 7;
-static int8_t constexpr PIN_LCD_RST = 8;
+static pin_size_t constexpr PIN_LCD_CS = 10;
+static pin_size_t constexpr PIN_LCD_DC = 7;
+static pin_size_t constexpr PIN_LCD_RST = 8;
 
 static Adafruit_ST7789 LCD(PIN_LCD_CS, PIN_LCD_DC, PIN_LCD_RST);
 
