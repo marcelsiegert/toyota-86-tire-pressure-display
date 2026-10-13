@@ -16,6 +16,7 @@ void init()
     lcd.enableDisplay(false);
     lcd.fillScreen(ST77XX_BLACK);
     lcd.enableDisplay(true);
+    lcd.setRotation(config::lcd_rotation);
 }
 
 void showError(const char* message)
