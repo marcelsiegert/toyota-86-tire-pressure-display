@@ -17,6 +17,7 @@ void init()
     lcd.fillScreen(ST77XX_BLACK);
     lcd.enableDisplay(true);
     lcd.setRotation(config::lcd_rotation);
+    lcd.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
 }
 
 void showError(const char* message)
