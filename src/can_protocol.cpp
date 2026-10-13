@@ -13,7 +13,7 @@ namespace {
 bool init()
 {
     // Only receive TPMS responses.
-    CAN.setFilterMask_Standard(0x1FFC0000);
+    CAN.setFilterMask_Standard(0x7FF << 18);
     for (std::size_t mailbox = 0; mailbox < R7FA4M1_CAN::CAN_MAX_NO_STANDARD_MAILBOXES; mailbox++) {
         CAN.setFilterId_Standard(mailbox, tpms_response_id);
     }
