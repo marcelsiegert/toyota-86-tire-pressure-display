@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <cstdint>
 
 namespace toyota_86_tire_pressure_display::config {
 
@@ -9,5 +10,9 @@ namespace toyota_86_tire_pressure_display::config {
 constexpr pin_size_t pin_lcd_cs = 10;
 constexpr pin_size_t pin_lcd_dc = 7;
 constexpr pin_size_t pin_lcd_rst = 8;
+
+// Display dimensions.
+constexpr std::uint16_t lcd_width = 172;
+constexpr std::uint16_t lcd_height = 320;
 
 }

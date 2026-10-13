@@ -12,7 +12,7 @@ namespace {
 
 void init()
 {
-    lcd.init(172, 320);
+    lcd.init(config::lcd_width, config::lcd_height);
     lcd.enableDisplay(false);
     lcd.fillScreen(ST77XX_BLACK);
     lcd.enableDisplay(true);
