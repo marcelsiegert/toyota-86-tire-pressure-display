@@ -4,12 +4,14 @@
 #include "src/can_protocol.h"
 #include "src/display.h"
 
+namespace tpd = toyota_86_tire_pressure_display;
+
 void setup()
 {
-    toyota_86_tire_pressure_display::display::init();
+    tpd::display::init();
 
-    if (!toyota_86_tire_pressure_display::can_protocol::init()) {
-        toyota_86_tire_pressure_display::display::showError("Error initializing CAN");
+    if (!tpd::can_protocol::init()) {
+        tpd::display::showError("Error initializing CAN");
         for (;;)
             ;
     }
