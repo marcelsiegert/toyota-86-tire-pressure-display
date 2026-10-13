@@ -2,6 +2,10 @@
 
 #include <Arduino.h>
 
-constexpr pin_size_t PIN_LCD_CS = 10;
-constexpr pin_size_t PIN_LCD_DC = 7;
-constexpr pin_size_t PIN_LCD_RST = 8;
+namespace toyota_86_tire_pressure_display::config {
+
+constexpr pin_size_t pin_lcd_cs = 10;
+constexpr pin_size_t pin_lcd_dc = 7;
+constexpr pin_size_t pin_lcd_rst = 8;
+
+}

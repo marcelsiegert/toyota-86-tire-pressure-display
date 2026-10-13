@@ -3,7 +3,10 @@
 
 #include "config.h"
 
-static Adafruit_ST7789 LCD(PIN_LCD_CS, PIN_LCD_DC, PIN_LCD_RST);
+static Adafruit_ST7789 LCD(
+    toyota_86_tire_pressure_display::config::pin_lcd_cs,
+    toyota_86_tire_pressure_display::config::pin_lcd_dc,
+    toyota_86_tire_pressure_display::config::pin_lcd_rst);
 
 void setup()
 {
