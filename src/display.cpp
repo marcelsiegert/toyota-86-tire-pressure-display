@@ -1,6 +1,7 @@
 #include "display.h"
 
 #include <Adafruit_ST7789.h>
+#include <Arduino.h>
 
 #include "../config.h"
 
@@ -12,6 +13,9 @@ namespace {
 
 void init()
 {
+    pinMode(config::pin_lcd_bl, PinMode::OUTPUT);
+    analogWrite(config::pin_lcd_bl, config::lcd_brightness);
+
     lcd.init(config::lcd_width, config::lcd_height);
     lcd.enableDisplay(false);
     lcd.fillScreen(ST77XX_BLACK);
