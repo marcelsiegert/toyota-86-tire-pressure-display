@@ -18,6 +18,8 @@ void setup()
         for (;;)
             ;
     }
+
+    tpd::display::update(tpd::tire_reading::TireReadings { });
 }
 
 void loop()
@@ -31,6 +33,6 @@ void loop()
     }
 
     if (const std::optional<tpd::tire_reading::TireReadings> tire_readings = tpd::tpms::poll()) {
-        // @todo Draw readings on the display.
+        tpd::display::update(*tire_readings);
     }
 }

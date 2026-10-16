@@ -24,6 +24,13 @@ constexpr std::uint8_t lcd_rotation = 1;
 // Display brightness.
 constexpr std::uint8_t lcd_brightness = 255;
 
+// Display text sizes.
+constexpr std::uint8_t lcd_text_size_pressure = 7;
+constexpr std::uint8_t lcd_text_size_temperature = 2;
+
+// Display spacing between the pressure and the temperature, in pixels.
+constexpr std::uint16_t lcd_line_spacing = 7;
+
 // Time between TPMS refreshes, in ms.
 constexpr std::uint32_t tpms_refresh_interval = 10'000;
 
