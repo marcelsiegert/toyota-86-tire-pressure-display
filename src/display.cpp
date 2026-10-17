@@ -100,6 +100,8 @@ void update(const tire_reading::TireReadings& tire_readings)
 
 void showError(const char* message)
 {
+    lcd.setTextSize(1);
+    lcd.setCursor(config::lcd_margin_left, config::lcd_margin_top);
     lcd.print(message);
 }
 
