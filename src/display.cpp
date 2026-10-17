@@ -74,18 +74,18 @@ void update(const tire_reading::TireReadings& tire_readings)
         const TextBounds pressure_bounds = getTextBounds(pressure_text, config::lcd_text_size_pressure);
         const TextBounds temperature_bounds = getTextBounds(temperature_text, config::lcd_text_size_temperature);
 
-        std::int16_t pressure_x = 0;
-        std::int16_t temperature_x = (pressure_bounds.width / 2) - (temperature_bounds.width / 2);
+        std::int16_t pressure_x = config::lcd_margin_left;
+        std::int16_t temperature_x = config::lcd_margin_left + (pressure_bounds.width / 2) - (temperature_bounds.width / 2);
         if (tire_position == tire::Tire::FrontRight || tire_position == tire::Tire::RearRight) {
-            pressure_x = lcd.width() - pressure_bounds.width;
-            temperature_x = lcd.width() - (pressure_bounds.width / 2) - (temperature_bounds.width / 2);
+            pressure_x = lcd.width() - config::lcd_margin_right - pressure_bounds.width;
+            temperature_x = lcd.width() - config::lcd_margin_right - (pressure_bounds.width / 2) - (temperature_bounds.width / 2);
         }
 
-        std::int16_t pressure_y = 0;
-        std::int16_t temperature_y = config::lcd_line_spacing + pressure_bounds.height;
+        std::int16_t pressure_y = config::lcd_margin_top;
+        std::int16_t temperature_y = config::lcd_margin_top + config::lcd_line_spacing + pressure_bounds.height;
         if (tire_position == tire::Tire::RearLeft || tire_position == tire::Tire::RearRight) {
-            pressure_y = lcd.height() - config::lcd_line_spacing - pressure_bounds.height - temperature_bounds.height;
-            temperature_y = lcd.height() - temperature_bounds.height;
+            pressure_y = lcd.height() - config::lcd_margin_bottom - config::lcd_line_spacing - pressure_bounds.height - temperature_bounds.height;
+            temperature_y = lcd.height() - config::lcd_margin_bottom - temperature_bounds.height;
         }
 
         lcd.setTextSize(config::lcd_text_size_pressure);

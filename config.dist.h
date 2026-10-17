@@ -24,6 +24,12 @@ constexpr std::uint8_t lcd_rotation = 1;
 // Display brightness.
 constexpr std::uint8_t lcd_brightness = 255;
 
+// Empty space between the display edges and the content.
+constexpr std::uint16_t lcd_margin_top = 6;
+constexpr std::uint16_t lcd_margin_right = 6;
+constexpr std::uint16_t lcd_margin_bottom = 6;
+constexpr std::uint16_t lcd_margin_left = 6;
+
 // Display text sizes.
 constexpr std::uint8_t lcd_text_size_pressure = 7;
 constexpr std::uint8_t lcd_text_size_temperature = 2;
