@@ -19,6 +19,9 @@ enum class TpmsFrameType : std::uint8_t {
 // Returns whether a `CanMsg` is a TPMS response frame.
 bool isTpmsFrame(const CanMsg& frame);
 
+// Returns whether a `CanMsg` is a body status frame.
+bool isBodyStatusFrame(const CanMsg& frame);
+
 // Requests the tire pressures. Returns whether the request was sent
 // successfully.
 [[nodiscard]] bool sendTpmsPressuresRequest();

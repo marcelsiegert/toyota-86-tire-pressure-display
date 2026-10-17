@@ -21,8 +21,10 @@ constexpr std::uint16_t lcd_width = 172;
 constexpr std::uint16_t lcd_height = 320;
 constexpr std::uint8_t lcd_rotation = 1;
 
-// Display brightness.
-constexpr std::uint8_t lcd_brightness = 255;
+// Display brightness. Nighttime applies while the headlights or parking lights
+// are on.
+constexpr std::uint8_t lcd_brightness_daytime = 255;
+constexpr std::uint8_t lcd_brightness_nighttime = 127;
 
 // Empty space between the display edges and the content, in pixels.
 constexpr std::uint16_t lcd_margin_top = 6;

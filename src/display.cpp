@@ -21,6 +21,7 @@ namespace {
     };
 
     Adafruit_ST7789 lcd(config::pin_lcd_cs, config::pin_lcd_dc, config::pin_lcd_rst);
+    std::uint8_t current_brightness = 0;
 
     // Returns the bounds of a text at the given text size, without the spacing
     // the font appends to the bottom and right of each character. Only valid
@@ -37,12 +38,20 @@ namespace {
 
         return bounds;
     }
+
+    void setBrightness(std::uint8_t value)
+    {
+        if (value != current_brightness) {
+            analogWrite(config::pin_lcd_bl, value);
+            current_brightness = value;
+        }
+    }
 }
 
 void init()
 {
     pinMode(config::pin_lcd_bl, PinMode::OUTPUT);
-    analogWrite(config::pin_lcd_bl, config::lcd_brightness);
+    analogWrite(config::pin_lcd_bl, current_brightness);
 
     lcd.init(config::lcd_width, config::lcd_height);
     lcd.enableDisplay(false);
@@ -96,6 +105,11 @@ void update(const tire_reading::TireReadings& tire_readings)
         lcd.setCursor(temperature_x, temperature_y);
         lcd.print(temperature_text);
     }
+}
+
+void setNightMode(bool enabled)
+{
+    setBrightness(enabled ? config::lcd_brightness_nighttime : config::lcd_brightness_daytime);
 }
 
 void showError(const char* message)

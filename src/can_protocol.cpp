@@ -13,6 +13,7 @@ namespace {
     constexpr std::uint32_t tpms_response_id = 0x758;
     constexpr std::uint8_t tpms_extended_id = 0x2A;
     constexpr std::uint8_t tpms_uds_service_id = 0x21;
+    constexpr std::uint32_t body_status_id = 0x375;
     constexpr std::uint8_t uds_positive_response_offset = 0x40;
     constexpr std::uint8_t tpms_tire_pressures_pid = 0x30;
     constexpr std::uint8_t tpms_tire_temperatures_pid = 0x16;
@@ -33,10 +34,10 @@ namespace {
 
 bool init()
 {
-    // Only receive TPMS responses.
+    // Only receive TPMS responses and body status frames.
     CAN.setFilterMask_Standard(0x7FF << 18);
     for (std::size_t mailbox = 0; mailbox < R7FA4M1_CAN::CAN_MAX_NO_STANDARD_MAILBOXES; mailbox++) {
-        CAN.setFilterId_Standard(mailbox, tpms_response_id);
+        CAN.setFilterId_Standard(mailbox, mailbox % 2 == 0 ? tpms_response_id : body_status_id);
     }
     return CAN.begin(CanBitRate::BR_500k);
 }
@@ -46,6 +47,12 @@ bool isTpmsFrame(const CanMsg& frame)
     return frame.id == tpms_response_id
         && frame.data_length == 8
         && frame.data[0] == tpms_extended_id;
+}
+
+bool isBodyStatusFrame(const CanMsg& frame)
+{
+    return frame.id == body_status_id
+        && frame.data_length == 8;
 }
 
 bool sendTpmsPressuresRequest()
