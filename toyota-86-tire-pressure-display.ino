@@ -1,4 +1,5 @@
 #include <Arduino_CAN.h>
+#include <WDT.h>
 #include <optional>
 
 #include "config.h"
@@ -12,13 +13,17 @@ namespace tpd = toyota_86_tire_pressure_display;
 
 void setup()
 {
+    // Maximum timeout of the UNO R4.
+    WDT.begin(5'592);
+    WDT.refresh();
+
     tpd::display::init();
 
     if (!tpd::can_protocol::init()) {
         tpd::display::setNightMode(false);
         tpd::display::showError("Error initializing CAN");
-        for (;;)
-            ;
+        // Let the watchdog timer trigger a hardware reset.
+        while (true) { }
     }
 
     tpd::display::update(tpd::tire_reading::TireReadings { });
@@ -26,6 +31,8 @@ void setup()
 
 void loop()
 {
+    WDT.refresh();
+
     while (CAN.available()) {
         const CanMsg frame = CAN.read();
 
