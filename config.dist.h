@@ -46,6 +46,10 @@ constexpr std::uint32_t tpms_refresh_interval = 10'000;
 // `tpms_refresh_interval`.
 constexpr std::uint32_t tpms_refresh_timeout = 2'000;
 
+// Time without a successful TPMS refresh after which the display shows no data
+// again, in ms. Should be significantly longer than `tpms_refresh_interval`.
+constexpr std::uint32_t tpms_stale_timeout = 30'000;
+
 // Which tire each of the four values in the TPMS response belongs to. If the
 // sensor IDs were programmed clockwise, starting with the front left tire, the
 // default order is already correct.

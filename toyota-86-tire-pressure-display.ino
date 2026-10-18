@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <Arduino_CAN.h>
 #include <WDT.h>
 #include <optional>
@@ -10,6 +11,11 @@
 #include "src/tpms.h"
 
 namespace tpd = toyota_86_tire_pressure_display;
+
+namespace {
+unsigned long last_tpms_refresh_success_time = 0;
+bool is_stale_tire_readings = true;
+}
 
 void setup()
 {
@@ -45,5 +51,13 @@ void loop()
 
     if (const std::optional<tpd::tire_reading::TireReadings> tire_readings = tpd::tpms::poll()) {
         tpd::display::update(*tire_readings);
+        last_tpms_refresh_success_time = millis();
+        is_stale_tire_readings = false;
+    }
+
+    // Reset display data if readings become stale (e.g., CAN bus disconnected).
+    if (!is_stale_tire_readings && millis() - last_tpms_refresh_success_time >= tpd::config::tpms_stale_timeout) {
+        tpd::display::update(tpd::tire_reading::TireReadings { });
+        is_stale_tire_readings = true;
     }
 }
