@@ -37,7 +37,8 @@ constexpr std::uint16_t lcd_margin_left = 4;
 constexpr std::uint16_t lcd_highlight_padding_horizontal = 4;
 constexpr std::uint16_t lcd_highlight_padding_vertical = 4;
 
-// Display text sizes.
+// Display text sizes. The temperature text size should be smaller than the
+// pressure text size.
 constexpr std::uint8_t lcd_text_size_pressure = 7;
 constexpr std::uint8_t lcd_text_size_temperature = 2;
 
