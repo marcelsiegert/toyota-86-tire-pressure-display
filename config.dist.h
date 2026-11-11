@@ -27,10 +27,15 @@ constexpr std::uint8_t lcd_brightness_daytime = 255;
 constexpr std::uint8_t lcd_brightness_nighttime = 127;
 
 // Empty space between the display edges and the content, in pixels.
-constexpr std::uint16_t lcd_margin_top = 6;
-constexpr std::uint16_t lcd_margin_right = 6;
-constexpr std::uint16_t lcd_margin_bottom = 6;
-constexpr std::uint16_t lcd_margin_left = 6;
+constexpr std::uint16_t lcd_margin_top = 4;
+constexpr std::uint16_t lcd_margin_right = 4;
+constexpr std::uint16_t lcd_margin_bottom = 4;
+constexpr std::uint16_t lcd_margin_left = 4;
+
+// Space around the reading values that is also colorized when a pressure
+// threshold is crossed, in pixels.
+constexpr std::uint16_t lcd_highlight_padding_horizontal = 4;
+constexpr std::uint16_t lcd_highlight_padding_vertical = 4;
 
 // Display text sizes.
 constexpr std::uint8_t lcd_text_size_pressure = 7;
@@ -59,5 +64,12 @@ constexpr std::array<tire::Tire, 4> tire_can_order = {
     tire::Tire::RearRight,
     tire::Tire::RearLeft,
 };
+
+// Pressure thresholds, in kPa. Readings with a pressure below the lower
+// threshold are highlighted in blue, and readings with a pressure above the
+// upper threshold in red. To disable the pressure highlighting, set the lower
+// threshold to `0` and the upper threshold to `999`.
+constexpr std::uint16_t pressure_threshold_low = 230;
+constexpr std::uint16_t pressure_threshold_high = 280;
 
 }

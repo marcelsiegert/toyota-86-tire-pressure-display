@@ -23,6 +23,9 @@ namespace {
         std::uint16_t height;
     };
 
+    constexpr std::uint16_t pressure_highlight_low = 0x041F; // Azure
+    constexpr std::uint16_t pressure_highlight_high = ST77XX_RED;
+
     Adafruit_ST7789 lcd(config::pin_lcd_cs, config::pin_lcd_dc, config::pin_lcd_rst);
     std::uint8_t current_brightness = 0;
 
@@ -125,8 +128,16 @@ void update(const tire_reading::TireReadings& tire_readings)
         // The space keeps the line's height when there is no temperature.
         char temperature_text[4] = " ";
 
+        std::uint16_t canvas_background_color = ST77XX_BLACK;
+
         if (const std::optional<std::uint16_t> pressure = reading.getPressure()) {
             std::snprintf(pressure_text, sizeof(pressure_text), "%03u", *pressure);
+
+            if (pressure < config::pressure_threshold_low) {
+                canvas_background_color = pressure_highlight_low;
+            } else if (pressure > config::pressure_threshold_high) {
+                canvas_background_color = pressure_highlight_high;
+            }
 
             if (const std::optional<std::int16_t> temperature = reading.getTemperature()) {
                 std::snprintf(temperature_text, sizeof(temperature_text), "%d", *temperature);
@@ -137,18 +148,18 @@ void update(const tire_reading::TireReadings& tire_readings)
         const TextBounds temperature_bounds = getTextBounds(temperature_text, config::lcd_text_size_temperature);
 
         GFXcanvas1 canvas(
-            pressure_bounds.width,
-            config::lcd_line_spacing + pressure_bounds.height + temperature_bounds.height);
+            (config::lcd_highlight_padding_horizontal * 2) + pressure_bounds.width,
+            (config::lcd_highlight_padding_vertical * 2) + config::lcd_line_spacing + pressure_bounds.height + temperature_bounds.height);
         canvas.setTextWrap(false);
 
         canvas.setTextSize(config::lcd_text_size_pressure);
-        canvas.setCursor(0, 0);
+        canvas.setCursor(config::lcd_highlight_padding_horizontal, config::lcd_highlight_padding_vertical);
         canvas.print(pressure_text);
 
         canvas.setTextSize(config::lcd_text_size_temperature);
         canvas.setCursor(
-            (pressure_bounds.width / 2) - (temperature_bounds.width / 2),
-            config::lcd_line_spacing + pressure_bounds.height);
+            config::lcd_highlight_padding_horizontal + (pressure_bounds.width / 2) - (temperature_bounds.width / 2),
+            config::lcd_highlight_padding_vertical + config::lcd_line_spacing + pressure_bounds.height);
         canvas.print(temperature_text);
 
         std::int16_t canvas_x = config::lcd_margin_left;
@@ -161,7 +172,7 @@ void update(const tire_reading::TireReadings& tire_readings)
             canvas_y = lcd.height() - canvas.height() - config::lcd_margin_bottom;
         }
 
-        drawCanvas(canvas, canvas_x, canvas_y, ST77XX_WHITE, ST77XX_BLACK);
+        drawCanvas(canvas, canvas_x, canvas_y, ST77XX_WHITE, canvas_background_color);
     }
 }
 
